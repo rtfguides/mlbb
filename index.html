@@ -1,0 +1,120 @@
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="google-adsense-account" content="ca-pub-8015766916576802">
+    <title>Mobile Legends Calculator</title>
+    <script type="text/javascript" src="https://github.com/niklasvh/html2canvas/releases/download/v1.4.1/html2canvas.min.js"></script>
+    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8015766916576802" crossorigin="anonymous"></script> -->
+    <link rel="stylesheet" href="index.min.css">
+</head>
+
+<body>
+    <h1>Mobile Legends Calculator</h1>
+    <div id="content">
+        <!-- EQUIPMENTS -->
+        <div id="container-left">
+            <h4>Selection List <span class="hint small">(Tap to pick an item)</span></h4>
+            <div id="tab" class="tab"></div>
+            <div id="equipment-list" class="tab">
+                <!-- BOOTS -->
+                <input class="tab-input" type="radio" checked="checked" name="tab" id="tab-item-boots" class="input"></input>
+                <label class="tab-label" for="tab-item-boots">Boots</label>
+                <div id="item-list-boots" class="equipment">
+                    <div class="filter-container boots-filter-container"><label>Filter: <input id="filter-boots" type="text" onkeyup="filterEquipment(this, 'item-list-boots')" onpaste="filterBoots(this,'item-list-boots')" placeholder="Filter by stat"></input></label></div>
+                    <h4>Roam</h4>
+                    <div id="equipment-roam" class="equipment-group"></div>
+                    <h4>Jungle</h4>
+                    <div id="equipment-jungle" class="equipment-group"></div>
+                    <h4>Movement</h4>
+                    <div id="equipment-boots" class="equipment-group"></div>
+                </div>
+                <!-- ATTACK -->
+                <input class="tab-input" type="radio" name="tab" id="tab-item-attack" class="input"></input>
+                <label class="tab-label" for="tab-item-attack">Attack</label>
+                <div id ="item-list-attack" class="equipment">
+                    <div class="filter-container"><label>Filter: <input id="filter-attack" type="text" onkeyup="filterEquipment(this, 'item-list-attack')" onpaste="filterEquipment(this, 'item-list-attack')" placeholder="Filter by stat"></input></label></div>
+                    <div id="equipment-attack" class="equipment-group"></div>
+                </div>
+                <!-- MAGIC -->
+                <input class="tab-input" type="radio" name="tab" id="tab-item-magic" class="input"></input>
+                <label class="tab-label" for="tab-item-magic">Magic</label>
+                <div id="item-list-magic" class="equipment">
+                    <div class="filter-container"><label>Filter: <input id="filter-magic" type="text" onkeyup="filterEquipment(this, 'item-list-magic')" onpaste="filterEquipment(this, 'item-list-magic')" placeholder="Filter by stat"></input></label></div>
+                    <div id="equipment-magic" class="equipment-group"></div>
+                </div>
+                <!-- DEFENSE -->
+                <input class="tab-input" type="radio" name="tab" id="tab-item-defense" class="input"></input>
+                <label class="tab-label" for="tab-item-defense">Defense</label>
+                <div id="item-list-defense" class="equipment">
+                    <div class="filter-container"><label>Filter: <input id="filter-defense" type="text" onkeyup="filterEquipment(this, 'item-list-defense')" onpaste="filterEquipment(this, 'item-list-defense')" placeholder="Filter by stat"></input></label></div>
+                    <div id="equipment-defense" class="equipment-group"></div>
+                </div>
+                <!-- EMBLEMS -->
+                <input class="tab-input" type="radio" name="tab" id="tab-item-emblems" class="input"></input>
+                <label class="tab-label" for="tab-item-emblems">Emblem</label>
+                <div class="equipment">
+                    <div id="equipment-emblem-container" class="equipment-emblem-container"></div>
+                </div>
+                <!-- BATTLE SPELLS -->
+                <input class="tab-input" type="radio" name="tab" id="tab-item-battlespell" class="input"></input>
+                <label class="tab-label" for="tab-item-battlespell">Battle Spell</label>
+                <div class="equipment">
+                    <div id="equipment-battlespell-container" class="equipment-group"></div>
+                </div>
+                <!-- HEROES -->
+                <input class="tab-input" type="radio" name="tab" id="tab-item-heroes" class="input"></input>
+                <label class="tab-label" for="tab-item-heroes">Heroes</label>
+                <div class="equipment">
+                    <div class="filter-container heroes-filter-container"><label>Filter: <input id="heroes-filter" type="text" onkeyup="filterHeroes(this)" onpaste="filterHeroes(this)" placeholder="Filter by name"></input></label></div>
+                    <div id="heroes-container" class="equipment-group"></div>
+                </div>
+                <!-- BUILDS -->
+                <input class="tab-input" type="radio" name="tab" id="tab-item-builds" class="input"></input>
+                <label class="tab-label" for="tab-item-builds">Builds</label>
+                <div class="equipment">
+                    <div class="filter-container community-builds-filter-container"><label>Filter: <input id="community-builds-filter" type="text" onkeyup="filterCommunityBuilds(this)" onpaste="filterCommunityBuilds(this)" placeholder="Filter by name"></input></label></div>
+                    <div id="community-builds-container" class="equipment-group"></div>
+                </div>
+            </div>
+        </div>
+        <!-- ITEMSET -->
+        <div id="container-itemset">
+            <!-- MENU - ACTIONS: SHARE, SAVE, RESET, CAPTURE -->
+            <h4>Item Set <span class="hint small">(Tap to remove an item)</span></h4>
+            <div style="padding-bottom:5px">
+                <a href="#" onclick="shareBuild()" class="small">Share me</a> - <a href="#" onclick="saveBuild()" class="small">Save</a> - <a href="#" onclick="resetBuild()" class="small">Reset</a> - <a href="#" onclick="downloadBuild()" class="small">Capture as image</a> 
+                <input id="bookmark-text" type="text" readonly="readonly"></input>
+            </div>
+            <p class="small hint">Clicking the "Share me" button above will open a new feedback window.</p>
+            <!-- EXPORTABLE BUILDS -->
+            <div class="itemset-export">
+                <div id="itemset-heroes"></div>
+                <div id="itemset-emblem"></div>
+                <div id="itemset"></div>
+                <h4>Calculated Stats</h4>
+                <div id="calculated-stats-notebook" class="notebook"></div>
+            </div>
+        </div>
+        <!-- DETAILS -->
+        <div id="container-details">
+            <h4>Details</h4>
+            <div class="small hint ">
+                <p>Reference links:
+                <a href="https://mobile-legends.fandom.com/wiki/Emblems_%26_Talents">Emblems/Talents</a> - <a href="https://mobile-legends.fandom.com/wiki/List_of_heroes">List of Heroes</a> - <a href="https://mobile-legends.fandom.com/wiki/Equipment">Equipments</a>
+            </p>
+            </div>
+            <div id="item-details-notebook" class="notebook"></div>
+            <div id="equipment-details"></div>
+        </div>
+
+    </div>
+    <!-- FOOTER -->
+    <div>
+        <p><span class="hint">Disclaimer: All images and texts used in this website are from this <a href="https://mobile-legends.fandom.com/wiki/" target="_blank">wiki</a></span></p>
+        <p><span>Thank you for using this app. You can reach me by using this <a href="https://form.jotform.com/241158550080854" target="_blank">feedback form</a>.</span></p>
+        <p>Bookmark this app: <a href="https://bit.ly/mlcalculator">Mobile Legends Calculator</a> - <span class="small hint">v2.0.0</span></p>
+    </div>
+</body>
+<script src="index.obfuscated.js"></script>
+</html>
